@@ -11,7 +11,7 @@ pipeline {
     }
     stages {
         stage('Build') {
-            when { expression { env.BRANCH_NAME.matches(/(feature|bugfix)\/(\w+-\w+)/) } }
+            when { expression { env.BRANCH_NAME.matches(/(feature|bugfix|demo)\/(\w+-\w+)/) } }
             agent any
             steps {
                 script {
