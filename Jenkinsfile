@@ -29,6 +29,9 @@ pipeline {
                 }
             }
         }
+        stage('Archive artifact') {
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+        }
         stage('Upload artifact') {
             script {
                 nexusPublisher nexusInstanceId: 'localNexus',
