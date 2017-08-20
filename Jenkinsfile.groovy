@@ -20,15 +20,15 @@ pipeline {
                 }
             }
         }
-//        stage('Master build') {
-//            when { branch 'master' }
-//            steps {
-//                script {
-//                    env.version = DateTimeFormatter.ofPattern('yyyy-MM-dd-HHmm').format(now(ZoneId.of('UTC')))
-//                    sh "mvn clean install"
-//                }
-//            }
-//        }
+        stage('Master build') {
+            when { branch 'master' }
+            steps {
+                script {
+                    env.version = DateTimeFormatter.ofPattern('yyyy-MM-dd-HHmm').format(now(ZoneId.of('UTC')))
+                    sh "mvn clean install"
+                }
+            }
+        }
         stage('Archive artifact') {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
         }
