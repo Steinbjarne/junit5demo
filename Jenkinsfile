@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     sh "echo 'Upload step'"
-                    nexusPublisher nexusInstanceId: 'localNexus',
+                    nexusPublisher nexusInstanceId: 'demoNexus',
                         nexusRepositoryId: 'releases',
                         packages: [[$class: 'MavenPackage',
                                     mavenAssetList: [[classifier: '', extension: '', filePath: 'jar/target/jenkins.jar']],
