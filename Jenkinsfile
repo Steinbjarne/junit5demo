@@ -29,6 +29,15 @@ pipeline {
                 }
             }
         }
+        stage('Upload artifact') {
+            script {
+                nexusPublisher nexusInstanceId: 'localNexus',
+                        nexusRepositoryId: 'releases',
+                        packages: [[$class: 'MavenPackage',
+                                    mavenAssetList: [[classifier: '', extension: '', filePath: 'jar/target/jenkins.jar']],
+                                    mavenCoordinate: [artifactId: 'jenkins-ja', groupId: 'org.jenkins-ci.main', packaging: 'jar', version: '2.23']]]
+            }
+        }
     }
     post {
         changed {
