@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter
 import static java.time.ZonedDateTime.now
 
 pipeline {
-    agent any
+    agent none
     options {
         timeout(time: 5, unit: 'DAYS')
         disableConcurrentBuilds()
@@ -21,15 +21,17 @@ pipeline {
             }
         }
         stage('Master build') {
+            agent any
             when { branch 'master' }
             steps {
                 script {
                     env.version = DateTimeFormatter.ofPattern('yyyy-MM-dd-HHmm').format(now(ZoneId.of('UTC')))
-                    sh "mvn clean install"
+                    sh "mvn clean package"
                 }
             }
         }
         stage('Upload') {
+            agent any
             steps {
                 script {
                     sh "echo 'Upload step'"
