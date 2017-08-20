@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter
 import static java.time.ZonedDateTime.now
 
 pipeline {
-    agent none
+    agent any
     options {
         timeout(time: 5, unit: 'DAYS')
         disableConcurrentBuilds()
@@ -29,20 +29,16 @@ pipeline {
                 }
             }
         }
-        stage('Archive artifact') {
-            script {
-                sh "echo 'Archive step'"
-//                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            }
-        }
-        stage('Upload artifact') {
-            script {
-                sh "echo 'publish step'"
-//                nexusPublisher nexusInstanceId: 'localNexus',
-//                        nexusRepositoryId: 'releases',
-//                        packages: [[$class: 'MavenPackage',
-//                                    mavenAssetList: [[classifier: '', extension: '', filePath: 'jar/target/jenkins.jar']],
-//                                    mavenCoordinate: [artifactId: 'jenkins-ja', groupId: 'org.jenkins-ci.main', packaging: 'jar', version: '2.23']]]
+        stage('Upload') {
+            steps {
+                script {
+                    sh "echo 'Upload step'"
+                    nexusPublisher nexusInstanceId: 'localNexus',
+                        nexusRepositoryId: 'releases',
+                        packages: [[$class: 'MavenPackage',
+                                    mavenAssetList: [[classifier: '', extension: '', filePath: 'jar/target/jenkins.jar']],
+                                    mavenCoordinate: [artifactId: 'jenkins-ja', groupId: 'org.jenkins-ci.main', packaging: 'jar', version: '2.23']]]
+                }
             }
         }
     }
