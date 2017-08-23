@@ -30,19 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Upload') {
-            agent any
-            steps {
-                script {
-                    sh "echo 'Upload step'"
-                    nexusPublisher nexusInstanceId: 'demoNexus',
-                        nexusRepositoryId: 'demoRepository',
-                        packages: [[$class: 'MavenPackage',
-                                    mavenAssetList: [[classifier: '', extension: '', filePath: 'target/junit5-demo-DEV-SNAPSHOT.jar']],
-                                    mavenCoordinate: [artifactId: 'junit5-demo', groupId: 'no.curiosity.demo.junit5', packaging: 'jar', version: '1.0.0']]]
-                }
-            }
-        }
+
     }
     post {
         changed {
