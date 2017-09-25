@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     env.version = DateTimeFormatter.ofPattern('yyyy-MM-dd-HHmm').format(now(ZoneId.of('UTC')))
-                    sh "mvn clean package"
+                    bat "mvn clean package"
                 }
             }
         }
@@ -25,8 +25,8 @@ pipeline {
             steps {
                 script {
                     env.version = DateTimeFormatter.ofPattern('yyyy-MM-dd-HHmm').format(now(ZoneId.of('UTC')))
-                    sh "whoami"
-                    sh "mvn clean package"
+                    bat "whoami"
+                    bat "mvn clean package"
                 }
             }
         }
